@@ -87,14 +87,14 @@ Task proposals:
 Responce:
 ```
 You have commit to run
-    ‘Task_id’ : {
-      2vCPU, RAM 4GB,
-      Storage 40GB,
-      Network 100Mb,
-      Ubuntu 22.04 LTS,
-      ‘ssh-rsa SSH_PUB_KEY’,
-      Price = 2 coin/day”
-    }
+    ‘Task_id’
+    2vCPU, RAM 4GB,
+    Storage 40GB,
+    Network 100Mb,
+    Ubuntu 22.04 LTS,
+    ‘ssh-rsa SSH_PUB_KEY’,
+    Price = 2 coin/day”
+
 
 /provide ssh access string:
   ...
