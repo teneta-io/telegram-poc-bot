@@ -1,5 +1,18 @@
 # TENETA Proof of Concept telegram bot
 
+## Starting to communicate with a bot
+
+```
+/start
+```
+
+Responce:
+
+```
+Welcome to TENETA PoC Web3 World.
+We have created wallet for your:
+Your wallet address: 'UUID'
+```
 
 ## For users who want to be a provider, and earn some goods providing computing power
 
