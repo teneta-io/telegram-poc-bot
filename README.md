@@ -162,7 +162,8 @@ Responce:
   Network 100Mb,
   Ubuntu 22.04 LTS,
   ‘ssh-rsa SSH_PUB_KEY’,
-  Price 1 coin/day},
+  Price 1 coin/day
+  },
 Status : Initiated
 ================================================================================
 ‘Task_id’ : {
@@ -172,7 +173,8 @@ Status : Initiated
   Network 100Mb,
   Ubuntu 22.04 LTS,
   ‘ssh-rsa SSH_PUB_KEY’,
-  Price 1 coin/day},
+  Price 1 coin/day
+  },
 Status : Executing,
 Access : 'root@public.ip -p PORT_NUMBER',
 Provider wallet: Provider_wallet
