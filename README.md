@@ -14,7 +14,9 @@ We have created a wallet for your:
 Your wallet address: 'UUID'
 
 **You can deploy your own Virtual Machine on TENETA for affordable price**
+
 or
+
 **You can run someone's Virtual Machine and earn some goods**
 
 
