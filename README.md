@@ -194,7 +194,7 @@ Responce:
 /sale coins
 ```
 
-Coin faucet:
+### Coin faucet
 
 ```
 /faucet coins
