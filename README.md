@@ -1,4 +1,4 @@
-# TENETA Proof of Concept telegram bot
+# TENETA Proof of Concept Telegram bot
 
 ## Starting to communicate with a bot
 
