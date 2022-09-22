@@ -9,9 +9,18 @@
 Responce:
 
 ```
-Welcome to TENETA PoC Web3 World.
+Welcome to TENETA Concept Web3 World.
 We have created a wallet for your:
 Your wallet address: 'UUID'
+
+*You can deploy your own Virtual Machine on TENETA for affordable price*
+or
+*You can run someone's Virtual Machine and earn some goods*
+
+Read more:
+[TENETA on GitHub](https://github.com/teneta-io)
+[TENETA](https://teneta.io)
+[Contribute TENETA](mailto://join@teneta.io)
 ```
 
 ## For users who want to be a provider, and earn some goods providing computing power
