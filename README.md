@@ -192,18 +192,25 @@ Responce:
 
 ```
 /send coins
+  /recipient address
+  /amount
+  /approve send
 ```
 
 ### Buy coins
 
 ```
 /buy coins
+  /amount
+  /payment method
 ```
 
 ### Sale coins
 
 ```
 /sale coins
+  /amount
+  /payment method  
 ```
 
 ### Coin faucet
@@ -211,3 +218,7 @@ Responce:
 ```
 /faucet coins
 ```
+
+Responce:
+
+You can receive X coins per day for running your Virtual Machines on TENETA
