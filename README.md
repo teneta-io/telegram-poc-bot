@@ -10,7 +10,7 @@ Responce:
 
 ```
 Welcome to TENETA PoC Web3 World.
-We have created wallet for your:
+We have created a wallet for your:
 Your wallet address: 'UUID'
 ```
 
