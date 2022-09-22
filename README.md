@@ -25,7 +25,7 @@ Responce:
 ```
 Task proposals:
 ```
-/“Task proposal 1:
+/Task proposal 1:
     ‘Task_id’
     1vCPU,
     RAM 2GB,
@@ -33,18 +33,18 @@ Task proposals:
     Network 100Mb,
     Ubuntu 22.04 LTS,
     ‘ssh-rsa SSH_PUB_KEY’,
-    Price = 1 coin/day”
+    Price = 1 coin/day
 
-/“Task proposal 2:
+/Task proposal 2:
     ‘Task_id’
     2vCPU, RAM 4GB,
     Storage 40GB,
     Network 100Mb,
     Ubuntu 22.04 LTS,
     ‘ssh-rsa SSH_PUB_KEY’,
-    Price = 2 coin/day”
+    Price = 2 coin/day
 
-/“Task proposal 3:
+/Task proposal 3:
     ‘Task_id’
     4vCPU,
     RAM 8GB,
@@ -52,18 +52,20 @@ Task proposals:
     Network 1000Mb,
     Ubuntu 22.04 LTS,
     ‘ssh-rsa SSH_PUB_KEY’,
-    Price 8 coin/day```”
+    Price 8 coin/day
 ```
 Responce:
 ```
 You have commit to run
-    ‘Task_id’:
-    2vCPU, RAM 4GB,
-    Storage 40GB,
-    Network 100Mb,
-    Ubuntu 22.04 LTS,
-    ‘ssh-rsa SSH_PUB_KEY’,
-    Price = 2 coin/day”
+    ‘Task_id’ : {
+      2vCPU, RAM 4GB,
+      Storage 40GB,
+      Network 100Mb,
+      Ubuntu 22.04 LTS,
+      ‘ssh-rsa SSH_PUB_KEY’,
+      Price = 2 coin/day”
+    }
+
 /provide ssh access string:
   ...
 ```
@@ -77,9 +79,16 @@ You have commit to run
 Responce:
 
 ```
-“‘Task_id’ : {2vCPU, RAM 4GB, Storage 40GB, Network 100Mb, Ubuntu 22.04 LTS,
-‘ssh-rsa SSH_PUB_KEY’, Price 1 coin/day},
-Status : Executing. root@public.ip -p PORT_NUMBER. Provider wallet: Provider_wallet
+‘Task_id’ : {
+  2vCPU,
+  RAM 4GB,
+  Storage 40GB,
+  Network 100Mb,
+  Ubuntu 22.04 LTS,
+  ‘ssh-rsa SSH_PUB_KEY’, Price 1 coin/day},
+Status : Executing,
+Access : root@public.ip -p PORT_NUMBER,
+Provider wallet: Provider_wallet
 ```
 
 ## For users who want to run some Virtual Machine somewhere for an affordable price
