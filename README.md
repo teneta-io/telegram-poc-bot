@@ -22,9 +22,9 @@ or
 
 Read more:
 
-[TENETA on GitHub](https://github.com/teneta-io)
+[TENETA site](https://teneta.io)
 
-[TENETA](https://teneta.io)
+[TENETA on GitHub](https://github.com/teneta-io)
 
 [Contribute TENETA](mailto://join@teneta.io)
 
