@@ -161,10 +161,8 @@ Status : Initiated
 
 “‘Task_id’ : {2vCPU, RAM 4GB, Storage 40GB, Network 100Mb, Ubuntu 22.04 LTS,
 ‘ssh-rsa SSH_PUB_KEY’, Price 1 coin/day},
-Status : Executing.
-
-'root@public.ip -p PORT_NUMBER'.
-
+Status : Executing,
+'root@public.ip -p PORT_NUMBER',
 Provider wallet: Provider_wallet
 ```
 
