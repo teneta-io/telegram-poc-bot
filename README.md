@@ -26,7 +26,7 @@ Read more:
 
 [TENETA on GitHub](https://github.com/teneta-io)
 
-[Contribute TENETA](mailto://join@teneta.io)
+[Contribute TENETA](mailto:join@teneta.io)
 
 
 ## For users who want to be a provider, and earn some goods providing computing power
