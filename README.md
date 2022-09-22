@@ -182,6 +182,12 @@ Responce:
 “Your balance is equal 0 coins”
 ```
 
+### Send coins
+
+```
+/send coins
+```
+
 ### Buy coins
 
 ```
