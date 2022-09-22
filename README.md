@@ -15,17 +15,59 @@
 Responce:
 
 ```
-  “You are registered as a provider with limits: ```16 vCPU, RAM 32GB, Storage 120GB, Network 1000Mb```, wait for tasks…”
+  “You are registered as a provider with limits:
+  16 vCPU,
+  RAM 32GB,
+  Storage 120GB,
+  Network 1000Mb,
+  wait for tasks…”
 
-/“Task proposal 1: ```1vCPU, RAM 2GB, Storage 20GB, Network 100Mb, Ubuntu 22.04 LTS,
-  ‘ssh-rsa SSH_PUB_KEY’, Price 1 coin/day```”
-
-/“Task proposal 2: ```2vCPU, RAM 4GB, Storage 40GB, Network 100Mb, Ubuntu 22.04 LTS,
-  ‘ssh-rsa SSH_PUB_KEY’, Price 2 coin/day```”
-
-/“Task proposal 3: ```4vCPU, RAM 8GB, Storage 80GB, Network 1000Mb, Ubuntu 22.04 LTS,
-  ‘ssh-rsa SSH_PUB_KEY’, Price 8 coin/day```”
 ```
+Task proposals:
+```
+/“Task proposal 1:
+    ‘Task_id’
+    1vCPU,
+    RAM 2GB,
+    Storage 20GB,
+    Network 100Mb,
+    Ubuntu 22.04 LTS,
+    ‘ssh-rsa SSH_PUB_KEY’,
+    Price = 1 coin/day”
+
+/“Task proposal 2:
+    ‘Task_id’
+    2vCPU, RAM 4GB,
+    Storage 40GB,
+    Network 100Mb,
+    Ubuntu 22.04 LTS,
+    ‘ssh-rsa SSH_PUB_KEY’,
+    Price = 2 coin/day”
+
+/“Task proposal 3:
+    ‘Task_id’
+    4vCPU,
+    RAM 8GB,
+    Storage 80GB,
+    Network 1000Mb,
+    Ubuntu 22.04 LTS,
+    ‘ssh-rsa SSH_PUB_KEY’,
+    Price 8 coin/day```”
+```
+Responce:
+```
+You have commit to run
+    ‘Task_id’:
+    2vCPU, RAM 4GB,
+    Storage 40GB,
+    Network 100Mb,
+    Ubuntu 22.04 LTS,
+    ‘ssh-rsa SSH_PUB_KEY’,
+    Price = 2 coin/day”
+/provide ssh access string:
+  ...
+```
+
 ### Get my commitment:
 
 ```
