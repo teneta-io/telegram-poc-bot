@@ -13,7 +13,7 @@ Welcome to TENETA Concept Web3 World.
 
 We have created a wallet for your:
 
-Your wallet address: 'UUID'
+Your wallet address: 'Provider_wallet'
 
 **You can deploy your own Virtual Machine on TENETA for affordable price**
 
