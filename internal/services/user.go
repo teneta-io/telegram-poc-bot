@@ -22,7 +22,7 @@ func NewUserService(repo repositories.UserRepository) UserService {
 }
 
 func (s *userService) FirstOrCreate(chatID int64, firstName, lastName, language string) (*entities.User, error) {
-	user, err := s.repo.FindBy(map[string]interface{}{"chatID": chatID})
+	user, err := s.repo.FindBy(map[string]interface{}{"chat_id": chatID})
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return s.repo.Create(&entities.User{
