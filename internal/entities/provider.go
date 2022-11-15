@@ -3,10 +3,11 @@ package entities
 import "github.com/google/uuid"
 
 type Provider struct {
-	UUID uuid.UUID `gorm:"primary_key"`
-
+	UUID   uuid.UUID `gorm:"primary_key"`
 	ChatID int64
-	User   User
+
+	UserUUID uuid.UUID
+	User     User
 
 	VCPU    int64
 	Ram     int64

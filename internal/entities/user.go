@@ -14,7 +14,7 @@ type User struct {
 	ChatID    int64
 	FirstName string
 	LastName  string
-	Wallet    *uuid.UUID
+	WalletID  *uuid.UUID
 
 	ProviderUUID   uuid.UUID
 	ProviderConfig *Provider `gorm:"foreignKey:ProviderUUID;references:UUID"`
