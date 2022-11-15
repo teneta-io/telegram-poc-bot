@@ -9,9 +9,14 @@ type Provider struct {
 	UserUUID uuid.UUID
 	User     User
 
-	VCPU    int64
+	VCPU    int64 `gorm:"column:vcpu"`
 	Ram     int64
 	Storage int64
 	Network int64
-	Ports   string
+	Ports   []Port `gorm:"serializer:json"`
+}
+
+type Port struct {
+	Protocol string
+	Number   int
 }

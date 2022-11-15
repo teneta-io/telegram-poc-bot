@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"teneta-tg/internal/entities"
+	"teneta-tg/internal/services"
 	"teneta-tg/internal/translator"
 )
 
@@ -27,12 +28,14 @@ const (
 type CommandManager struct {
 	keyboardManager *KeyboardManager
 	translator      *translator.Translator
+	userService     services.UserService
 }
 
-func NewCommandManager(keyboardManager *KeyboardManager, translator *translator.Translator) *CommandManager {
+func NewCommandManager(keyboardManager *KeyboardManager, translator *translator.Translator, userService services.UserService) *CommandManager {
 	return &CommandManager{
 		keyboardManager: keyboardManager,
 		translator:      translator,
+		userService:     userService,
 	}
 }
 
@@ -72,6 +75,11 @@ func (m *CommandManager) execStartCommand(user *entities.User) (*tgbotapi.Messag
 func (m *CommandManager) execActAsProviderCommand(user *entities.User) (*tgbotapi.MessageConfig, error) {
 	if user.ProviderConfig == nil {
 		user.ProviderConfig = &entities.Provider{}
+		user.ProviderConfig.ChatID = user.ChatID
+
+		if err := m.userService.Save(user); err != nil {
+			return nil, err
+		}
 	}
 
 	msg := tgbotapi.NewMessage(

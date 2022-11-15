@@ -28,6 +28,8 @@ func (m *MessageManager) proceed(user *entities.User, update tgbotapi.Update) (*
 		return m.proceedAddResourceLimit(user, "storage", update.Message.Text, DefaultState)
 	case AddNetworkLimitState:
 		return m.proceedAddResourceLimit(user, "network", update.Message.Text, DefaultState)
+	case AddPortsState:
+
 	}
 
 	return nil, nil
@@ -49,3 +51,15 @@ func (m *MessageManager) proceedAddResourceLimit(user *entities.User, t, message
 
 	return &msg, nil
 }
+
+func (m *MessageManager) proceedAddPortLimit(user *entities.User, t, message string, nextState int) (*tgbotapi.MessageConfig, error) {
+	fmt.Println(message, nextState)
+
+	msg := tgbotapi.NewMessage(
+		user.ChatID,
+		m.translator.Translate(fmt.Sprintf("%s_limit_added", t), "en", map[string]interface{}{"count": 1}),
+	)
+
+	return &msg, nil
+}
+
