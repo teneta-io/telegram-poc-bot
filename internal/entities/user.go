@@ -25,3 +25,7 @@ type User struct {
 func (u *User) IsProvider() bool {
 	return u.ProviderConfig != nil
 }
+
+func (u *User) SetPorts(ports []string) error {
+	return u.ProviderConfig.SetPorts(ports)
+}

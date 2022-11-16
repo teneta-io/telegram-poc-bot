@@ -4,17 +4,21 @@ import (
 	"fmt"
 	"github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"strconv"
+	"strings"
 	"teneta-tg/internal/entities"
+	"teneta-tg/internal/services"
 	"teneta-tg/internal/translator"
 )
 
 type MessageManager struct {
-	translator *translator.Translator
+	translator  *translator.Translator
+	userService services.UserService
 }
 
-func NewMessageManager(translator *translator.Translator) *MessageManager {
+func NewMessageManager(translator *translator.Translator, userService services.UserService) *MessageManager {
 	return &MessageManager{
-		translator: translator,
+		translator:  translator,
+		userService: userService,
 	}
 }
 
@@ -29,7 +33,7 @@ func (m *MessageManager) proceed(user *entities.User, update tgbotapi.Update) (*
 	case AddNetworkLimitState:
 		return m.proceedAddResourceLimit(user, "network", update.Message.Text, DefaultState)
 	case AddPortsState:
-
+		return m.proceedAddPort(user, "ports", update.Message.Text, DefaultState)
 	}
 
 	return nil, nil
@@ -52,14 +56,45 @@ func (m *MessageManager) proceedAddResourceLimit(user *entities.User, t, message
 	return &msg, nil
 }
 
-func (m *MessageManager) proceedAddPortLimit(user *entities.User, t, message string, nextState int) (*tgbotapi.MessageConfig, error) {
-	fmt.Println(message, nextState)
+func (m *MessageManager) proceedAddPort(user *entities.User, t, message string, nextState int) (*tgbotapi.MessageConfig, error) {
+	tmp := strings.ReplaceAll(message, "[", "")
+	tmp = strings.ReplaceAll(tmp, "]", "")
+	tmp = strings.ReplaceAll(tmp, " ", "")
 
-	msg := tgbotapi.NewMessage(
-		user.ChatID,
-		m.translator.Translate(fmt.Sprintf("%s_limit_added", t), "en", map[string]interface{}{"count": 1}),
-	)
+	err := user.SetPorts(strings.Split(tmp, ","))
+	user.State = nextState
+
+	var msg tgbotapi.MessageConfig
+
+	switch err {
+	case entities.ErrWrongPortFormat:
+		msg = tgbotapi.NewMessage(
+			user.ChatID,
+			m.translator.Translate("invalid_ports_format", "en", nil),
+		)
+	case entities.ErrNumberCanNotBePort:
+		msg = tgbotapi.NewMessage(
+			user.ChatID,
+			m.translator.Translate("invalid_ports_number_error", "en", nil),
+		)
+	case entities.ErrProtocolIsNotSupported:
+		msg = tgbotapi.NewMessage(
+			user.ChatID,
+			m.translator.Translate("invalid_ports_protocol_error", "en",
+				map[string]interface{}{"protocols": entities.AvailableProtocols}),
+		)
+	case nil:
+		msg = tgbotapi.NewMessage(
+			user.ChatID,
+			m.translator.Translate("ports_limit_added", "en",
+				map[string]interface{}{"ports": user.ProviderConfig.Ports.String()}),
+		)
+
+		if err := m.userService.Save(user); err != nil {
+			return nil, err
+		}
+
+	}
 
 	return &msg, nil
 }
-

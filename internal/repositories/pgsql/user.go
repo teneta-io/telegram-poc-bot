@@ -31,5 +31,5 @@ func (r *userRepository) Create(user *entities.User) (*entities.User, error) {
 }
 
 func (r *userRepository) Save(user *entities.User) error {
-	return r.conn.Save(user).Error
+	return r.conn.Session(&gorm.Session{FullSaveAssociations: true}).Save(user).Error
 }

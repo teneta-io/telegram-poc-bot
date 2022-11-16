@@ -61,8 +61,9 @@ func BuildBot(ctx context.Context, wg *sync.WaitGroup) []di.Def {
 			Name: constants.MessageManager,
 			Build: func(ctn di.Container) (interface{}, error) {
 				t := ctn.Get(constants.Translator).(*translator.Translator)
+				userService := ctn.Get(constants.UserService).(services.UserService)
 
-				return bot.NewMessageManager(t), nil
+				return bot.NewMessageManager(t, userService), nil
 			},
 		},
 	}

@@ -21,5 +21,9 @@
   "network_limit_added": "Great, you provide <b>{{ .count }}MB</b> network throughput limit",
   "invalid_network_value_error": "Invalid network throughput limit value, please try again",
 
-  "open_ports_start": "Please select port type (example: <b>[UDP:53, TCP:80]</b>)"
+  "open_ports_start": "Please select port type (example: <b>[UDP:53, TCP:80]</b>)",
+  "ports_limit_added": "Great, you open <b>{{ .ports }}</b> ports",
+  "invalid_ports_protocol_error": "Invalid protocol. Supported protocols: <b>{{ .protocols }}</b>",
+  "invalid_ports_number_error": "Invalid number. Number must be in [0, 65536]",
+  "invalid_ports_format": "Invalid format. Example: <b>[UDP:53, TCP:80]</b>"
 }
