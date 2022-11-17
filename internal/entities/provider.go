@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var AvailableProtocols = []string{"TCP", "UDP"}
+var AvailableProtocols = []string{"tcp", "udp"}
 
 var ErrProtocolIsNotSupported = errors.New("protocol is not supported")
 var ErrNumberCanNotBePort = errors.New("number can not be port")
@@ -46,35 +46,44 @@ func (port *Port) String() string {
 	return port.Protocol + ":" + number
 }
 
-func (provider *Provider) SetPorts(ports []string) error {
-	newPorts := make([]Port, len(ports))
+func (provider *Provider) SetPorts(ports []string) map[string]error {
+	newPorts := make([]Port, 0)
+	errs := make(map[string]error, 0)
 
-	for i, port := range ports {
+	for _, port := range ports {
 		couple := strings.Split(port, ":")
 		if len(couple) != 2 {
-			return ErrWrongPortFormat
+			errs[port] = ErrWrongPortFormat
+
+			continue
 		}
 
-		protocol, numberStr := strings.ToUpper(couple[0]), couple[1]
+		protocol, numberStr := strings.ToLower(couple[0]), couple[1]
 
 		if !lo.Contains(AvailableProtocols, protocol) {
-			return ErrProtocolIsNotSupported
+			errs[port] = ErrProtocolIsNotSupported
+
+			continue
 		}
 
 		number, err := strconv.Atoi(numberStr)
 		if err != nil {
-			return ErrNumberCanNotBePort
+			errs[port] = ErrNumberCanNotBePort
+
+			continue
 		}
 
 		if number < 0 || number > (1<<16) {
-			return ErrNumberCanNotBePort
+			errs[port] = ErrNumberCanNotBePort
+
+			continue
 		}
 
-		newPorts[i] = Port{Protocol: protocol, Number: number}
+		newPorts = append(newPorts, Port{Protocol: protocol, Number: number})
 	}
 
 	provider.Ports = append(provider.Ports, newPorts...)
 	provider.Ports = lo.Uniq(provider.Ports)
 
-	return nil
+	return errs
 }

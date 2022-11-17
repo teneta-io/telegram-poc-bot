@@ -26,6 +26,6 @@ func (u *User) IsProvider() bool {
 	return u.ProviderConfig != nil
 }
 
-func (u *User) SetPorts(ports []string) error {
+func (u *User) SetPorts(ports []string) map[string]error {
 	return u.ProviderConfig.SetPorts(ports)
 }
