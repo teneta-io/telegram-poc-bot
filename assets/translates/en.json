@@ -23,7 +23,7 @@
 
   "open_ports_start": "Please select port type (example: <b>udp:53, tcp:80</b>)",
   "ports_limit_added": "Great, your opened ports: <b>{{ .ports }}</b>",
-  "invalid_ports_protocol_error": "<b>{{ .port }}</b>: Invalid protocol. Supported protocols: <b>{{ .protocols }}</b>",
+  "invalid_ports_protocol_error": "<b>{{ .port }}</b>: Invalid protocol. Supported protocols: <b>{{ .availableProtocols }}</b>",
   "invalid_ports_number_error": "<b>{{ .port }}</b>: Invalid number. Number must be in [0, 65536]",
   "invalid_ports_format_error": "<b>{{ .port }}</b>: Invalid format. Example: <b>udp:53, tcp:80</b>",
   "unknown_ports_error": "<b>{{ .port }}</b>: Unknown error"

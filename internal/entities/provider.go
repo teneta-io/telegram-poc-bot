@@ -10,9 +10,9 @@ import (
 
 var AvailableProtocols = []string{"tcp", "udp"}
 
-var ErrProtocolIsNotSupported = errors.New("protocol is not supported")
-var ErrNumberCanNotBePort = errors.New("number can not be port")
-var ErrWrongPortFormat = errors.New("wrong ports format")
+var ErrInvalidPortsProtocol = errors.New("invalid_ports_protocol_error")
+var ErrInvalidPortsNumber = errors.New("invalid_ports_number_error")
+var ErrInvalidPortsFormat = errors.New("invalid_ports_format_error")
 
 type Provider struct {
 	UUID   uuid.UUID `gorm:"primary_key"`
@@ -51,39 +51,42 @@ func (provider *Provider) SetPorts(ports []string) map[string]error {
 	errs := make(map[string]error, 0)
 
 	for _, port := range ports {
-		couple := strings.Split(port, ":")
-		if len(couple) != 2 {
-			errs[port] = ErrWrongPortFormat
-
-			continue
-		}
-
-		protocol, numberStr := strings.ToLower(couple[0]), couple[1]
-
-		if !lo.Contains(AvailableProtocols, protocol) {
-			errs[port] = ErrProtocolIsNotSupported
-
-			continue
-		}
-
-		number, err := strconv.Atoi(numberStr)
+		p, err := provider.ParsePort(port)
 		if err != nil {
-			errs[port] = ErrNumberCanNotBePort
+			errs[port] = err
 
 			continue
 		}
 
-		if number < 0 || number > (1<<16) {
-			errs[port] = ErrNumberCanNotBePort
-
-			continue
-		}
-
-		newPorts = append(newPorts, Port{Protocol: protocol, Number: number})
+		newPorts = append(newPorts, p)
 	}
 
 	provider.Ports = append(provider.Ports, newPorts...)
 	provider.Ports = lo.Uniq(provider.Ports)
 
 	return errs
+}
+
+func (provider *Provider) ParsePort(port string) (Port, error) {
+	couple := strings.Split(port, ":")
+	if len(couple) != 2 {
+		return Port{}, ErrInvalidPortsFormat
+	}
+
+	protocol, numberStr := strings.ToLower(couple[0]), couple[1]
+
+	if !lo.Contains(AvailableProtocols, protocol) {
+		return Port{}, ErrInvalidPortsProtocol
+	}
+
+	number, err := strconv.Atoi(numberStr)
+	if err != nil {
+		return Port{}, ErrInvalidPortsNumber
+	}
+
+	if number < 0 || number > (1<<16) {
+		return Port{}, ErrInvalidPortsNumber
+	}
+
+	return Port{Protocol: protocol, Number: number}, nil
 }

@@ -75,20 +75,14 @@ func (m *MessageManager) proceedAddPort(user *entities.User, t, message string, 
 	}
 
 	for port, err := range errs {
-		switch err {
-		case entities.ErrWrongPortFormat:
-			messages = append(messages, m.translator.Translate("invalid_ports_format_error", "en",
-				map[string]interface{}{"port": port}))
-		case entities.ErrNumberCanNotBePort:
-			messages = append(messages, m.translator.Translate("invalid_ports_number_error", "en",
-				map[string]interface{}{"port": port}))
-		case entities.ErrProtocolIsNotSupported:
-			messages = append(messages, m.translator.Translate("invalid_ports_protocol_error", "en",
-				map[string]interface{}{"protocols": entities.AvailableProtocols, "port": port}))
-		default:
-			messages = append(messages, m.translator.Translate("unknown_ports_error", "en",
-				map[string]interface{}{"port": port}))
+		args := map[string]interface{}{"availableProtocols": entities.AvailableProtocols, "port": port}
+		msg, ok := m.translator.TryTranslate(err.Error(), "en", args)
+
+		if !ok {
+			msg = m.translator.Translate("unknown_ports_error", "en", args)
 		}
+
+		messages = append(messages, msg)
 	}
 
 	msg := tgbotapi.NewMessage(user.ChatID, strings.Join(messages, "\n"))
