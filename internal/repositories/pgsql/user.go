@@ -15,7 +15,7 @@ func NewUserRepository(conn *gorm.DB) repositories.UserRepository {
 }
 
 func (r *userRepository) FindBy(params map[string]interface{}) (user *entities.User, err error) {
-	if err = r.conn.Where(params).First(&user).Error; err != nil {
+	if err = r.conn.Where(params).Preload("ProviderConfig").First(&user).Error; err != nil {
 		return nil, err
 	}
 
@@ -28,4 +28,8 @@ func (r *userRepository) Create(user *entities.User) (*entities.User, error) {
 	}
 
 	return user, nil
+}
+
+func (r *userRepository) Save(user *entities.User) error {
+	return r.conn.Session(&gorm.Session{FullSaveAssociations: true}).Save(user).Error
 }

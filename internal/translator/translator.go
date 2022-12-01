@@ -32,14 +32,20 @@ func NewTranslator() *Translator {
 }
 
 func (t *Translator) Translate(msg string, language string, args map[string]interface{}) (str string) {
+	str, _ = t.TryTranslate(msg, language, args)
+
+	return str
+}
+
+func (t *Translator) TryTranslate(msg string, language string, args map[string]interface{}) (str string, isFound bool) {
 	var err error
 
 	if str, err = i18n.NewLocalizer(translator.bundle, language).
 		Localize(&i18n.LocalizeConfig{MessageID: msg, TemplateData: args}); err != nil {
 		zap.S().Error(err.Error())
 
-		return msg
+		return msg, false
 	}
 
-	return str
+	return str, true
 }

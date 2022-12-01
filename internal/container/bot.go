@@ -52,16 +52,18 @@ func BuildBot(ctx context.Context, wg *sync.WaitGroup) []di.Def {
 			Build: func(ctn di.Container) (interface{}, error) {
 				keyboardManager := ctn.Get(constants.KeyboardManager).(*bot.KeyboardManager)
 				t := ctn.Get(constants.Translator).(*translator.Translator)
+				userService := ctn.Get(constants.UserService).(services.UserService)
 
-				return bot.NewCommandManager(keyboardManager, t), nil
+				return bot.NewCommandManager(keyboardManager, t, userService), nil
 			},
 		},
 		{
 			Name: constants.MessageManager,
 			Build: func(ctn di.Container) (interface{}, error) {
 				t := ctn.Get(constants.Translator).(*translator.Translator)
+				userService := ctn.Get(constants.UserService).(services.UserService)
 
-				return bot.NewMessageManager(t), nil
+				return bot.NewMessageManager(t, userService), nil
 			},
 		},
 	}

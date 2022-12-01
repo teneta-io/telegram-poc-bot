@@ -7,7 +7,7 @@ create table if not exists users
     updated_at timestamptz,
     deleted_at timestamptz,
 
-    uuid       uuid primary key,
+    uuid       uuid default gen_random_uuid() primary key,
     chat_id    bigint,
     first_name varchar(40),
     last_name  varchar(40),
@@ -25,7 +25,7 @@ create table if not exists providers
     updated_at timestamptz,
     deleted_at timestamptz,
 
-    uuid       uuid primary key,
+    uuid       uuid default gen_random_uuid() primary key,
     chat_id    bigint,
     user_uuid  uuid references users(uuid),
 

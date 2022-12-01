@@ -16,8 +16,7 @@ type User struct {
 	LastName  string
 	WalletID  *uuid.UUID
 
-	ProviderUUID   uuid.UUID
-	ProviderConfig *Provider `gorm:"foreignKey:ProviderUUID;references:UUID"`
+	ProviderConfig *Provider `gorm:"references:UUID"`
 
 	Language string
 	State    int
@@ -25,4 +24,8 @@ type User struct {
 
 func (u *User) IsProvider() bool {
 	return u.ProviderConfig != nil
+}
+
+func (u *User) SetPorts(ports []string) map[string]error {
+	return u.ProviderConfig.SetPorts(ports)
 }
