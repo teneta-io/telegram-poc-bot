@@ -2,6 +2,7 @@ package pgsql
 
 import (
 	"fmt"
+	"github.com/pressly/goose/v3"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"sync"
@@ -42,6 +43,10 @@ func NewPgsqlConnection(config *Config) (*gorm.DB, error) {
 		database.SetConnMaxLifetime(ConnectionMaxLifetime)
 		database.SetMaxIdleConns(MaxIDLEConnectionCount)
 		database.SetMaxOpenConns(MaxOpenConnectionCount)
+
+		if err = goose.Up(database, "./migrations", goose.WithAllowMissing()); err != nil {
+			return
+		}
 	})
 
 	return connection, err

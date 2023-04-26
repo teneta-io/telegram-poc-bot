@@ -1,13 +1,17 @@
+server:
+  host: 0.0.0.0
+  port: 8200
+
 telegram:
   token:
-  senderCount: 1
+  senderCount: 2
 
 pgsql:
-  host: server-db
+  host: 0.0.0.0
   port: 5432
   name: postgres
   user: postgres
-  pass: "12345"
+  pass: postgres
   connectionTimeout: 30s
   compression: zlib
   pingInterval: 30s

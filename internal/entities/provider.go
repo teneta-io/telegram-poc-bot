@@ -15,11 +15,11 @@ var ErrInvalidPortsNumber = errors.New("invalid_ports_number_error")
 var ErrInvalidPortsFormat = errors.New("invalid_ports_format_error")
 
 type Provider struct {
-	UUID   uuid.UUID `gorm:"primary_key"`
+	ID     uuid.UUID `gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
 	ChatID int64
 
-	UserUUID uuid.UUID
-	User     User
+	UserID uuid.UUID `gorm:"type:uuid"`
+	User   User
 
 	VCPU    int64 `gorm:"column:vcpu"`
 	Ram     int64

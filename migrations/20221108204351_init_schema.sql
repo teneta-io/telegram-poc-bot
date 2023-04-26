@@ -7,7 +7,7 @@ create table if not exists users
     updated_at timestamptz,
     deleted_at timestamptz,
 
-    uuid       uuid default gen_random_uuid() primary key,
+    id         uuid        default gen_random_uuid() primary key,
     chat_id    bigint,
     first_name varchar(40),
     last_name  varchar(40),
@@ -25,15 +25,15 @@ create table if not exists providers
     updated_at timestamptz,
     deleted_at timestamptz,
 
-    uuid       uuid default gen_random_uuid() primary key,
+    id         uuid        default gen_random_uuid() primary key,
     chat_id    bigint,
-    user_uuid  uuid references users(uuid),
+    user_id    uuid references users (id),
 
-    vcpu int default null,
-    ram int default null,
-    storage int default null,
-    network int default null,
-    ports jsonb default null
+    vcpu       int         default null,
+    ram        int         default null,
+    storage    int         default null,
+    network    int         default null,
+    ports      jsonb       default null
 );
 
 create unique index providers_chat_id_idx on providers using btree (chat_id);

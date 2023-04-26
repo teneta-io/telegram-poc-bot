@@ -10,13 +10,13 @@ type User struct {
 	UpdatedAt time.Time
 	DeletedAt *time.Time `sql:"index"`
 
-	UUID      uuid.UUID `gorm:"primary_key"`
+	ID        uuid.UUID `gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
 	ChatID    int64
 	FirstName string
 	LastName  string
 	WalletID  *uuid.UUID
 
-	ProviderConfig *Provider `gorm:"references:UUID"`
+	ProviderConfig *Provider
 
 	Language string
 	State    int

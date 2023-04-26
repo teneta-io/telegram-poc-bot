@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  postgres:
+  database:
     container_name: teneta-db
     image: postgres
     restart: always
@@ -11,3 +11,20 @@ services:
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
+    networks:
+      - default
+
+  app:
+    container_name: teneta-bot
+    build: .
+    ports:
+      - "8200:8200"
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
