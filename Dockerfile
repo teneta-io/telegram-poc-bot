@@ -19,6 +19,6 @@ COPY --from=builder /app/migrations migrations
 COPY --from=builder /app/config.yml ./config.yml
 
 RUN mkdir /app/secrets
-RUN ln -s /vault/secrets/config.yml /app/config.yml
+RUN #ln -s /vault/secrets/config.yml /app/config.yml
 
 ENTRYPOINT ["./app"]
