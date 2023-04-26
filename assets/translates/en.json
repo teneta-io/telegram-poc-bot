@@ -18,7 +18,7 @@
   "invalid_storage_value_error": "Invalid storage limit value, please try again",
 
   "network_limit_add_start": "Please, enter network throughput limit value that you want provide",
-  "network_limit_added": "Great, you provide <b>{{ .count }}MB</b> network throughput limit",
+  "network_limit_added": "Great, you provide <b>{{ .count }}Mb</b> network throughput limit",
   "invalid_network_value_error": "Invalid network throughput limit value, please try again",
 
   "open_ports_start": "Please select port type (example: <b>udp:53, tcp:80</b>)",
