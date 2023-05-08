@@ -70,10 +70,7 @@ func (b *Bot) proceedAddResourceLimit(user *entities.User, t, message string, ne
 
 	user.State = nextState
 
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate(fmt.Sprintf("%s_added", t), "en", map[string]interface{}{"count": v}),
-	}
+	b.response(user, fmt.Sprintf("%s_added", t), map[string]interface{}{"count": v})
 
 	return
 }
@@ -103,10 +100,7 @@ func (b *Bot) proceedAddPort(user *entities.User, t, message string, nextState i
 		messages = append(messages, msg)
 	}
 
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   strings.Join(messages, "\n"),
-	}
+	b.response(user, strings.Join(messages, "\n"), nil)
 
 	return
 }

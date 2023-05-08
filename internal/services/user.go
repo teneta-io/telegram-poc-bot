@@ -10,7 +10,7 @@ import (
 
 type UserService interface {
 	FirstOrCreate(chatID int64, firstName, lastName, language string) (*entities.User, error)
-	Save(user *entities.User) error
+	Save(user *entities.User)
 }
 
 type userService struct {
@@ -41,6 +41,8 @@ func (s *userService) FirstOrCreate(chatID int64, firstName, lastName, language 
 	return user, nil
 }
 
-func (s userService) Save(user *entities.User) error {
-	return s.repo.Save(user)
+func (s *userService) Save(user *entities.User) {
+	if err := s.repo.Save(user); err != nil {
+		zap.S().Error(err)
+	}
 }

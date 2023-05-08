@@ -106,8 +106,11 @@ func (b *Bot) proceedUpdate(update tgbotapi.Update) {
 	}
 }
 
-func (b *Bot) proceedError(user *entities.User, err error) string {
-	return b.translator.Translate(err.Error(), "en", nil)
+func (b *Bot) response(user *entities.User, message string, args map[string]interface{}) {
+	b.messageCh <- &MessageResponse{
+		ChatId: user.ChatID,
+		Text:   b.translator.Translate(message, "en", args),
+	}
 }
 
 func (b *Bot) prepareUser(message *tgbotapi.Message) *entities.User {

@@ -58,10 +58,7 @@ func (b *Bot) proceedCommand(user *entities.User, command string) {
 }
 
 func (b *Bot) proceedStartCommand(user *entities.User) {
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate("start_command_response", "en", nil),
-	}
+	b.response(user, "start_command_response", nil)
 }
 
 func (b *Bot) execActAsProviderCommand(user *entities.User) {
@@ -72,46 +69,31 @@ func (b *Bot) execActAsProviderCommand(user *entities.User) {
 
 	user.State = actAsProviderState
 
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate("act_as_provider_response", "en", nil),
-	}
+	b.response(user, "act_as_provider_response", nil)
 }
 
 func (b *Bot) proceedActAsCustomerCommand(user *entities.User) {
 	user.State = actAsCustomerState
 
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate("act_as_customer_response", "en", nil),
-	}
+	b.response(user, "act_as_customer_response", nil)
 }
 
 func (b *Bot) proceedAddResourceCommand(user *entities.User, t string, state int) {
 	if !user.IsProvider() {
-		b.messageCh <- &MessageResponse{
-			ChatId: user.ChatID,
-			Text:   b.translator.Translate("user_not_registered_as_provider", "en", nil),
-		}
+		b.response(user, "user_not_registered_as_provider", nil)
 
 		return
 	}
 
 	if user.State != actAsProviderState {
-		b.messageCh <- &MessageResponse{
-			ChatId: user.ChatID,
-			Text:   b.translator.Translate("user_current_context_is_not_provider", "en", nil),
-		}
+		b.response(user, "user_current_context_is_not_provider", nil)
 
 		return
 	}
 
 	user.State = state
 
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate(fmt.Sprintf("%s_add_start", t), "en", nil),
-	}
+	b.response(user, fmt.Sprintf("%s_add_start", t), nil)
 
 	return
 }
