@@ -70,7 +70,7 @@ func (b *Bot) proceedAddResourceLimit(user *entities.User, t, message string, ne
 
 	user.State = nextState
 
-	b.response(user, fmt.Sprintf("%s_added", t), map[string]interface{}{"count": v})
+	b.response(user, fmt.Sprintf("%s_added", t), map[string]interface{}{"count": v}, nil, nil)
 
 	return
 }
@@ -100,7 +100,7 @@ func (b *Bot) proceedAddPort(user *entities.User, t, message string, nextState i
 		messages = append(messages, msg)
 	}
 
-	b.response(user, strings.Join(messages, "\n"), nil)
+	b.response(user, strings.Join(messages, "\n"), nil, nil, nil)
 
 	return
 }

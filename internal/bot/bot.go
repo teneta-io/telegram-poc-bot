@@ -106,10 +106,12 @@ func (b *Bot) proceedUpdate(update tgbotapi.Update) {
 	}
 }
 
-func (b *Bot) response(user *entities.User, message string, args map[string]interface{}) {
+func (b *Bot) response(user *entities.User, message string, args map[string]interface{}, inlineMarkup *tgbotapi.InlineKeyboardMarkup, replyMarkup *tgbotapi.ReplyKeyboardMarkup) {
 	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate(message, "en", args),
+		ChatId:       user.ChatID,
+		Text:         b.translator.Translate(message, "en", args),
+		InlineMarkup: inlineMarkup,
+		ReplyMarkup:  replyMarkup,
 	}
 }
 

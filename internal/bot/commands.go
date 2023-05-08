@@ -58,7 +58,7 @@ func (b *Bot) proceedCommand(user *entities.User, command string) {
 }
 
 func (b *Bot) proceedStartCommand(user *entities.User) {
-	b.response(user, "start_command_response", nil)
+	b.response(user, "start_command_response", nil, nil, nil)
 }
 
 func (b *Bot) execActAsProviderCommand(user *entities.User) {
@@ -69,31 +69,31 @@ func (b *Bot) execActAsProviderCommand(user *entities.User) {
 
 	user.State = actAsProviderState
 
-	b.response(user, "act_as_provider_response", nil)
+	b.response(user, "act_as_provider_response", nil, nil, nil)
 }
 
 func (b *Bot) proceedActAsCustomerCommand(user *entities.User) {
 	user.State = actAsCustomerState
 
-	b.response(user, "act_as_customer_response", nil)
+	b.response(user, "act_as_customer_response", nil, nil, nil)
 }
 
 func (b *Bot) proceedAddResourceCommand(user *entities.User, t string, state int) {
 	if !user.IsProvider() {
-		b.response(user, "user_not_registered_as_provider", nil)
+		b.response(user, "user_not_registered_as_provider", nil, nil, nil)
 
 		return
 	}
 
 	if user.State != actAsProviderState {
-		b.response(user, "user_current_context_is_not_provider", nil)
+		b.response(user, "user_current_context_is_not_provider", nil, nil, nil)
 
 		return
 	}
 
 	user.State = state
 
-	b.response(user, fmt.Sprintf("%s_add_start", t), nil)
+	b.response(user, fmt.Sprintf("%s_add_start", t), nil, nil, nil)
 
 	return
 }
