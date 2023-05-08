@@ -21,28 +21,22 @@ type Bot struct {
 	wg  *sync.WaitGroup
 	api *tgbotapi.BotAPI
 
-	msgCh          chan *tgbotapi.MessageConfig
+	messageCh      chan *MessageResponse
 	userCollection map[int64]*entities.User
-
-	commandManager *CommandManager
-	messageManager *MessageManager
 
 	userService services.UserService
 	translator  *translator.Translator
 }
 
-func New(ctx context.Context, wg *sync.WaitGroup, cfg *Config, api *tgbotapi.BotAPI, commandManager *CommandManager, messageManager *MessageManager, userService services.UserService, translator *translator.Translator) (*Bot, error) {
+func New(ctx context.Context, wg *sync.WaitGroup, cfg *Config, api *tgbotapi.BotAPI, userService services.UserService, translator *translator.Translator) (*Bot, error) {
 	wg.Add(1)
 	b := &Bot{
 		ctx: ctx,
 		wg:  wg,
 		api: api,
 
-		msgCh:          make(chan *tgbotapi.MessageConfig, 200),
+		messageCh:      make(chan *MessageResponse, 200),
 		userCollection: make(map[int64]*entities.User),
-
-		commandManager: commandManager,
-		messageManager: messageManager,
 
 		userService: userService,
 		translator:  translator,
@@ -63,9 +57,7 @@ func (b *Bot) Run() {
 	for {
 		select {
 		case update := <-updates:
-			if msg := b.proceedUpdate(update); msg != nil {
-				b.msgCh <- msg
-			}
+			b.proceedUpdate(update)
 		case <-b.ctx.Done():
 			b.wg.Done()
 			zap.S().Info("Telegram bot API stopped.")
@@ -75,7 +67,18 @@ func (b *Bot) Run() {
 }
 
 func (b *Bot) send() {
-	for msg := range b.msgCh {
+	for message := range b.messageCh {
+		msg := tgbotapi.NewMessage(message.ChatId, message.Text)
+		msg.ReplyMarkup = tgbotapi.NewRemoveKeyboard(false)
+
+		if message.ReplyMarkup != nil {
+			msg.ReplyMarkup = message.ReplyMarkup
+		}
+
+		if message.InlineMarkup != nil {
+			msg.ReplyMarkup = message.InlineMarkup
+		}
+
 		msg.ParseMode = tgbotapi.ModeHTML
 		msg.DisableWebPagePreview = true
 
@@ -91,34 +94,20 @@ func (b *Bot) typing(ChatID int64) (tgbotapi.Message, error) {
 	return b.api.Send(msg)
 }
 
-func (b *Bot) proceedUpdate(update tgbotapi.Update) *tgbotapi.MessageConfig {
-	var msg *tgbotapi.MessageConfig
-	var err error
-
+func (b *Bot) proceedUpdate(update tgbotapi.Update) {
 	if update.Message != nil && update.Message.Chat != nil {
 		user := b.prepareUser(update.Message)
 
-		if !update.Message.IsCommand() {
-			msg, err = b.messageManager.proceed(user, update)
+		if update.Message.IsCommand() {
+			b.proceedCommand(user, update.Message.Command())
 		} else {
-			msg, err = b.commandManager.proceed(user, update)
-		}
-
-		if err != nil {
-			msg = b.proceedError(user, err)
+			b.proceedMessage(user, update.Message.Text)
 		}
 	}
-
-	return msg
 }
 
-func (b *Bot) proceedError(user *entities.User, err error) *tgbotapi.MessageConfig {
-	msg := tgbotapi.NewMessage(
-		user.ChatID,
-		b.translator.Translate(err.Error(), "en", nil),
-	)
-
-	return &msg
+func (b *Bot) proceedError(user *entities.User, err error) string {
+	return b.translator.Translate(err.Error(), "en", nil)
 }
 
 func (b *Bot) prepareUser(message *tgbotapi.Message) *entities.User {

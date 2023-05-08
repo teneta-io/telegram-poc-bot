@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"teneta-tg/internal/entities"
 	"teneta-tg/internal/repositories"
@@ -33,6 +34,8 @@ func (s *userService) FirstOrCreate(chatID int64, firstName, lastName, language 
 				Language:  language,
 			})
 		}
+
+		zap.S().Error(err)
 	}
 
 	return user, nil

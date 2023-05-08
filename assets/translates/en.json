@@ -5,26 +5,33 @@
 
   "undefined_command": "Undefined command, please select one of available command",
 
-  "vcpu_limit_add_start": "Please, enter vCPU limit value that you want provide",
-  "vcpu_limit_added": "Great, you provide <b>{{ .count }}</b> vCPU limit",
+  "vcpu_add_start": "Please, enter vCPU limit value that you want provide",
+  "vcpu_added": "Great, you provide <b>{{ .count }}</b> vCPU limit",
   "invalid_vcpu_value_error": "Invalid vCPU limit value, please try again",
 
-  "ram_limit_add_start": "Please, enter RAM limit value that you want provide",
-  "ram_limit_added": "Great, you provide <b>{{ .count }}GB</b> RAM limit",
+  "ram_add_start": "Please, enter RAM limit value that you want provide",
+  "ram_added": "Great, you provide <b>{{ .count }}GB</b> RAM limit",
   "invalid_ram_value_error": "Invalid RAM limit value, please try again",
 
-  "storage_limit_add_start": "Please, enter storage limit value that you want provide",
-  "storage_limit_added": "Great, you provide <b>{{ .count }}GB</b> storage limit",
+  "storage_add_start": "Please, enter storage limit value that you want provide",
+  "storage_added": "Great, you provide <b>{{ .count }}GB</b> storage limit",
   "invalid_storage_value_error": "Invalid storage limit value, please try again",
 
-  "network_limit_add_start": "Please, enter network throughput limit value that you want provide",
-  "network_limit_added": "Great, you provide <b>{{ .count }}Mb</b> network throughput limit",
+  "network_add_start": "Please, enter network throughput limit value that you want provide",
+  "network_added": "Great, you provide <b>{{ .count }}Mb</b> network throughput limit",
   "invalid_network_value_error": "Invalid network throughput limit value, please try again",
 
-  "open_ports_start": "Please select port type (example: <b>udp:53, tcp:80</b>)",
-  "ports_limit_added": "Great, your opened ports: <b>{{ .ports }}</b>",
+  "ports_add_start": "Please select port type (example: <b>udp:53, tcp:80</b>)",
+  "ports_added": "Great, your opened ports: <b>{{ .ports }}</b>",
+
   "invalid_ports_protocol_error": "<b>{{ .port }}</b>: Invalid protocol. Supported protocols: <b>{{ .availableProtocols }}</b>",
   "invalid_ports_number_error": "<b>{{ .port }}</b>: Invalid number. Number must be in [0, 65536]",
   "invalid_ports_format_error": "<b>{{ .port }}</b>: Invalid format. Example: <b>udp:53, tcp:80</b>",
-  "unknown_ports_error": "<b>{{ .port }}</b>: Unknown error"
+
+  "unknown_ports_error": "<b>{{ .port }}</b>: Unknown error",
+
+  "user_current_context_is_not_provider": "You are not act as provider, please change context",
+  "user_current_context_is_not_customer": "You are not act as customer, please change context",
+
+  "something_wrong": "Ooops, something went wrong, try again later"
 }

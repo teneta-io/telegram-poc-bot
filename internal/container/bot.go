@@ -33,37 +33,10 @@ func BuildBot(ctx context.Context, wg *sync.WaitGroup) []di.Def {
 			Build: func(ctn di.Container) (interface{}, error) {
 				cfg := ctn.Get(constants.ConfigName).(*config.Config)
 				api := ctn.Get(constants.TelegramAPI).(*tgbotapi.BotAPI)
-				commandManager := ctn.Get(constants.CommandManager).(*bot.CommandManager)
-				messageManager := ctn.Get(constants.MessageManager).(*bot.MessageManager)
 				userService := ctn.Get(constants.UserService).(services.UserService)
 				t := ctn.Get(constants.Translator).(*translator.Translator)
 
-				return bot.New(ctx, wg, cfg.TelegramConfig, api, commandManager, messageManager, userService, t)
-			},
-		},
-		{
-			Name: constants.KeyboardManager,
-			Build: func(ctn di.Container) (interface{}, error) {
-				return bot.NewKeyboardManager(), nil
-			},
-		},
-		{
-			Name: constants.CommandManager,
-			Build: func(ctn di.Container) (interface{}, error) {
-				keyboardManager := ctn.Get(constants.KeyboardManager).(*bot.KeyboardManager)
-				t := ctn.Get(constants.Translator).(*translator.Translator)
-				userService := ctn.Get(constants.UserService).(services.UserService)
-
-				return bot.NewCommandManager(keyboardManager, t, userService), nil
-			},
-		},
-		{
-			Name: constants.MessageManager,
-			Build: func(ctn di.Container) (interface{}, error) {
-				t := ctn.Get(constants.Translator).(*translator.Translator)
-				userService := ctn.Get(constants.UserService).(services.UserService)
-
-				return bot.NewMessageManager(t, userService), nil
+				return bot.New(ctx, wg, cfg.TelegramConfig, api, userService, t)
 			},
 		},
 	}
