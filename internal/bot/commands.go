@@ -36,24 +36,24 @@ func (b *Bot) proceedCommand(user *entities.User, command string) {
 	// SYSTEM
 	case startCommand:
 		b.proceedStartCommand(user)
-		return
 	case actAsProviderCommand:
 		b.execActAsProviderCommand(user)
 		b.userService.Save(user)
-		return
-	case actAsCustomerCommand:
 
 	// PROVIDER
 	case addVCPULimitCommand, addRAMLimitCommand, addStorageLimitCommand, addNetworkLimitCommand, addPortCommand:
 		b.proceedAddResourceCommand(user, command, resourceCommandState[command])
-		return
+		b.userService.Save(user)
 
 		// CUSTOMER
-	}
-
-	b.messageCh <- &MessageResponse{
-		ChatId: user.ChatID,
-		Text:   b.translator.Translate("undefined_command", "en", nil),
+	case actAsCustomerCommand:
+		b.proceedActAsCustomerCommand(user)
+		b.userService.Save(user)
+	default:
+		b.messageCh <- &MessageResponse{
+			ChatId: user.ChatID,
+			Text:   b.translator.Translate("undefined_command", "en", nil),
+		}
 	}
 }
 
@@ -75,7 +75,7 @@ func (b *Bot) execActAsProviderCommand(user *entities.User) {
 func (b *Bot) proceedActAsCustomerCommand(user *entities.User) {
 	user.State = actAsCustomerState
 
-	b.response(user, "act_as_customer_response", nil, nil, nil)
+	b.response(user, "act_as_customer_response", map[string]interface{}{"count": 0, "costs": 0}, b.actAsCustomerInlineKeyboard(user.Language), nil)
 }
 
 func (b *Bot) proceedAddResourceCommand(user *entities.User, t string, state int) {

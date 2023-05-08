@@ -1,5 +1,6 @@
 {
   "start_command_response": "Welcome to TENETA Concept Web3 World.\nWe have created a wallet for your:\nYour wallet address: 'Provider_wallet'\n\n<b>You can deploy your own Virtual Machine on TENETA for affordable price</b>\nOR\n<b>You can run someone's Virtual Machine and earn some goods</b>\n\nRead more:\n<a href='https://teneta.io/'>TENETA site</a>\n<a href='https://github.com/teneta-io'>TENETA on GitHub</a>\n<a href='mailto:join@teneta.io'>Contribute TENETA</a>",
+
   "act_as_provider_response": "<b>You are registered as a provider</b>\nUse following commands for set limits:\n\n/vcpu - Add or change vCPU limit: 1, 2, 4, 8, 16, 32, 64, 128\n/ram - Add or change RAM limit, <b>GB</b>: 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024\n/storage - Add or change storage limit, <b>GB</b>: 20, 40, 80, 120, 160, 200, 240, 300, 1000, 2000\n/network - Add or change network throughput limit, <b>MB</b>: 100, 1000, 10000\n/ports - Add or change open ports: [<b>UDP</b>:53, <b>TCP</b>:80, <b>TCP</b>:443]",
   "user_not_registered_as_provider": "You are <b>NOT</b> registered as provider\nPlease, user following command to start\n/act_as_provider",
 
@@ -33,5 +34,10 @@
   "user_current_context_is_not_provider": "You are not act as provider, please change context",
   "user_current_context_is_not_customer": "You are not act as customer, please change context",
 
-  "something_wrong": "Ooops, something went wrong, try again later"
+  "something_wrong": "Ooops, something went wrong, try again later",
+
+  "act_as_customer_response": "<b>Tasks count: </b>{{ .count }}\n<b>Estimated costs:</b> {{ .costs }}",
+
+  "create_task": "➕ Create task",
+  "task_list": "📄 My tasks"
 }

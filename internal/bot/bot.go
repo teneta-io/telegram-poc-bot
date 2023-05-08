@@ -95,40 +95,49 @@ func (b *Bot) typing(ChatID int64) (tgbotapi.Message, error) {
 }
 
 func (b *Bot) proceedUpdate(update tgbotapi.Update) {
+	if update.CallbackQuery != nil && update.Message == nil {
+		user := b.prepareUser(update.CallbackQuery.From)
+		b.proceedCallback(user, update.CallbackData())
+
+		return
+	}
+
 	if update.Message != nil && update.Message.Chat != nil {
-		user := b.prepareUser(update.Message)
+		user := b.prepareUser(update.Message.From)
 
 		if update.Message.IsCommand() {
 			b.proceedCommand(user, update.Message.Command())
-		} else {
-			b.proceedMessage(user, update.Message.Text)
+
+			return
 		}
+
+		b.proceedMessage(user, update.Message.Text)
 	}
 }
 
 func (b *Bot) response(user *entities.User, message string, args map[string]interface{}, inlineMarkup *tgbotapi.InlineKeyboardMarkup, replyMarkup *tgbotapi.ReplyKeyboardMarkup) {
 	b.messageCh <- &MessageResponse{
 		ChatId:       user.ChatID,
-		Text:         b.translator.Translate(message, "en", args),
+		Text:         b.translator.Translate(message, user.Language, args),
 		InlineMarkup: inlineMarkup,
 		ReplyMarkup:  replyMarkup,
 	}
 }
 
-func (b *Bot) prepareUser(message *tgbotapi.Message) *entities.User {
+func (b *Bot) prepareUser(user *tgbotapi.User) *entities.User {
 	b.mx.Lock()
 	defer b.mx.Unlock()
 
-	if _, exist := b.userCollection[message.Chat.ID]; !exist {
-		user, err := b.userService.FirstOrCreate(message.Chat.ID, message.Chat.FirstName, message.Chat.LastName, "en")
+	if _, exist := b.userCollection[user.ID]; !exist {
+		u, err := b.userService.FirstOrCreate(user.ID, user.FirstName, user.LastName, "en")
 		if err != nil {
 			zap.S().Errorf("can not retrieve user from db: %e", err)
 
 			return nil
 		}
 
-		b.userCollection[user.ChatID] = user
+		b.userCollection[u.ChatID] = u
 	}
 
-	return b.userCollection[message.Chat.ID]
+	return b.userCollection[user.ID]
 }
